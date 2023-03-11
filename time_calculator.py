@@ -4,10 +4,10 @@ class Time:
         self._minutes = int(minutes)
 
     def hours(self):
-        return str(self._hour)
+        return self._hour
 
     def minutes(self):
-        return f"{self._minutes:02}"
+        return self._minutes
 
     def add(self, time: 'Time'):
         return Time(self._hour + time._hour, self._minutes + time._minutes)
@@ -22,7 +22,8 @@ class Clock:
         return Clock(self._time.add(time), self._format)
 
     def to_string(self):
-        return f'{self._time.hours()}:{str(self._time.minutes())} {self._format}'
+        minutes = f"{self._time.minutes():02}"
+        return f'{self._time.hours()}:{minutes} {self._format}'
 
 
 def parse_clock(start) -> Clock:
