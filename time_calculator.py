@@ -14,9 +14,10 @@ class Time:
         hours = self.hours + time.hours
         minutes = self.minutes + time.minutes
 
-        hours = hours + int(minutes / 60)
+        days = int((hours + int(minutes / 60)) / 24)
+        hours = (hours + int(minutes / 60)) % 24
         minutes = minutes % 60
-        return Time.__create__(0, hours, minutes)
+        return Time.__create__(days, hours, minutes)
 
 
 class Clock:
@@ -31,9 +32,7 @@ class Clock:
         return Clock(time, "")
 
     def add(self, time: Time):
-        time_after = self._time.add(time)
-        hours = time_after.hours
-        return Clock.__create__(Time(hours, time_after.minutes))
+        return Clock.__create__(self._time.add(time))
 
     def to_string(self):
         hours = self._time.hours
@@ -41,7 +40,12 @@ class Clock:
         clock_format = "AM" if hours < 12 else "PM"
         hours = hours if hours <= 12 else hours - 12
 
-        return f'{hours}:{self._time.minutes:02} {clock_format}'
+        time = f'{hours}:{self._time.minutes:02} {clock_format}'
+        days = ""
+        if self._time.days == 1:
+            days = " (next day)"
+
+        return time + days
 
 
 def parse_clock(start) -> Clock:
