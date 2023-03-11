@@ -19,6 +19,9 @@ class Clock:
         minutes = self._time.minutes % 60
         hours = self._time.hours + int(self._time.minutes / 60)
         clock_format = self._format
+        if hours > 12:
+            clock_format = "PM"
+            hours -= 12
         return f'{hours}:{minutes:02} {clock_format}'
 
 
