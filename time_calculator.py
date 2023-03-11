@@ -26,5 +26,5 @@ class Time:
     def minutes(self):
         return f"{self._minutes:02}"
 
-    def add(self, time):
+    def add(self, time: 'Time'):
         return Time(self._hour + time._hour, self._minutes + time._minutes)
