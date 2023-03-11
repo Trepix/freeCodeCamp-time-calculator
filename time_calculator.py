@@ -21,10 +21,10 @@ class Time:
         self._minutes = int(minutes)
 
     def hours(self):
-        return self._hour
+        return str(self._hour)
 
     def minutes(self):
-        return self._minutes
+        return f"{self._minutes:02}"
 
     def add(self, time):
-        return Time(self.hours() + time.hours(), self.minutes() + time.minutes())
+        return Time(self._hour + time._hour, self._minutes + time._minutes)
