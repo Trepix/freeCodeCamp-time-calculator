@@ -2,6 +2,13 @@ class Time:
     def __init__(self, hours, minutes):
         self.hours = int(hours)
         self.minutes = int(minutes)
+        self.days = 0
+
+    @staticmethod
+    def __create__(days, hours, minutes):
+        time = Time(hours, minutes)
+        time.days = days
+        return time
 
     def add(self, time: 'Time'):
         hours = self.hours + time.hours
@@ -9,7 +16,7 @@ class Time:
 
         hours = hours + int(minutes / 60)
         minutes = minutes % 60
-        return Time(hours, minutes)
+        return Time.__create__(0, hours, minutes)
 
 
 class Clock:
