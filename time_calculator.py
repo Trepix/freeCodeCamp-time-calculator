@@ -30,10 +30,10 @@ class Clock:
 
     def to_string(self):
         hours = self._time.hours
-        clock_format = "AM"
-        if hours > 12:
-            hours -= 12
-            clock_format = "PM"
+
+        clock_format = "AM" if hours < 12 else "PM"
+        hours = hours if hours <= 12 else hours - 12
+
         return f'{hours}:{self._time.minutes:02} {clock_format}'
 
 
