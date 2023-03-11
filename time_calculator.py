@@ -13,21 +13,28 @@ class Time:
 
 
 class Clock:
-    def __init__(self, time: Time, clock_format):
+    def __init__(self, time: Time, clock_format: str):
+        if clock_format == "PM":
+            time = time.add(Time(12, 0))
+
         self._time = time
-        self._format = clock_format
+
+    @staticmethod
+    def __create__(time: Time):
+        return Clock(time, "")
 
     def add(self, time: Time):
         time_after = self._time.add(time)
         hours = time_after.hours
-        clock_format = self._format
-        if time_after.hours > 12:
-            clock_format = "PM"
-            hours -= 12
-        return Clock(Time(hours, time_after.minutes), clock_format)
+        return Clock.__create__(Time(hours, time_after.minutes))
 
     def to_string(self):
-        return f'{self._time.hours}:{self._time.minutes:02} {self._format}'
+        hours = self._time.hours
+        clock_format = "AM"
+        if hours > 12:
+            hours -= 12
+            clock_format = "PM"
+        return f'{hours}:{self._time.minutes:02} {clock_format}'
 
 
 def parse_clock(start) -> Clock:
