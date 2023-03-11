@@ -21,6 +21,9 @@ class Clock:
     def add(self, time: Time):
         return Clock(self._time.add(time), self._format)
 
+    def to_string(self):
+        return f'{self._time.hours()}:{str(self._time.minutes())} {self._format}'
+
 
 def parse_clock(start) -> Clock:
     time = start.split()[0].split(":")
@@ -36,6 +39,4 @@ def add_time(start, duration):
     clock = parse_clock(start)
     duration = parse_duration(duration)
     clock = clock.add(duration)
-    result = clock._time
-    clock_format = clock._format
-    return f'{result.hours()}:{str(result.minutes())} {clock_format}'
+    return clock.to_string()
