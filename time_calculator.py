@@ -27,12 +27,8 @@ class Clock:
 
         self._time = time
 
-    @staticmethod
-    def __create__(time: Time):
-        return Clock(time, "")
-
     def add(self, time: Time):
-        return Clock.__create__(self._time.add(time))
+        return Clock(self._time.add(time), "")
 
     def to_string(self):
         hours = self._time.hours
