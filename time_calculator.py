@@ -3,9 +3,15 @@ def parse_time(start):
     return Time(time[0], time[1])
 
 
+def parse_duration(duration):
+    time = duration.split(":")
+    return Time(time[0], time[1])
+
+
 def add_time(start, duration):
-    time = parse_time(start)
-    return str(time.hours() + 2) + ":" + str(time.minutes() + 12) + " PM"
+    clock = parse_time(start)
+    duration = parse_duration(duration)
+    return str(clock.hours() + duration.hours()) + ":" + str(clock.minutes() + duration.minutes()) + " PM"
 
 
 class Time:
