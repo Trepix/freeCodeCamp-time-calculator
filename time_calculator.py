@@ -22,8 +22,8 @@ class Clock:
         return Clock(self._time.add(time), self._format)
 
     def to_string(self):
-        minutes = f"{self._time.minutes():02}"
-        return f'{self._time.hours()}:{minutes} {self._format}'
+        minutes = self._time.minutes()
+        return f'{self._time.hours()}:{minutes:02} {self._format}'
 
 
 def parse_clock(start) -> Clock:
