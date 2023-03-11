@@ -28,7 +28,8 @@ class Clock:
 
 def parse_clock(start) -> Clock:
     time = start.split()[0].split(":")
-    return Clock(Time(time[0], time[1]), "PM")
+    clock_format = start.split()[1]
+    return Clock(Time(time[0], time[1]), clock_format)
 
 
 def parse_duration(duration):
@@ -39,5 +40,4 @@ def parse_duration(duration):
 def add_time(start, duration):
     clock = parse_clock(start)
     duration = parse_duration(duration)
-    clock = clock.add(duration)
-    return clock.to_string()
+    return clock.add(duration).to_string()
