@@ -4,7 +4,12 @@ class Time:
         self.minutes = int(minutes)
 
     def add(self, time: 'Time'):
-        return Time(self.hours + time.hours, self.minutes + time.minutes)
+        hours = self.hours + time.hours
+        minutes = self.minutes + time.minutes
+
+        hours = hours + int(minutes / 60)
+        minutes = minutes % 60
+        return Time(hours, minutes)
 
 
 class Clock:
@@ -13,16 +18,16 @@ class Clock:
         self._format = clock_format
 
     def add(self, time: Time):
-        return Clock(self._time.add(time), self._format)
-
-    def to_string(self):
-        minutes = self._time.minutes % 60
-        hours = self._time.hours + int(self._time.minutes / 60)
+        time_after = self._time.add(time)
+        hours = time_after.hours
         clock_format = self._format
-        if hours > 12:
+        if time_after.hours > 12:
             clock_format = "PM"
             hours -= 12
-        return f'{hours}:{minutes:02} {clock_format}'
+        return Clock(Time(hours, time_after.minutes), clock_format)
+
+    def to_string(self):
+        return f'{self._time.hours}:{self._time.minutes:02} {self._format}'
 
 
 def parse_clock(start) -> Clock:
