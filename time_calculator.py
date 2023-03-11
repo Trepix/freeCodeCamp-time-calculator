@@ -12,7 +12,7 @@ def add_time(start, duration):
     clock = parse_time(start)
     duration = parse_duration(duration)
     result = clock.add(duration)
-    return str(result.hours()) + ":" + str(result.minutes()) + " PM"
+    return f'{result.hours()}:{str(result.minutes())} PM'
 
 
 class Time:
