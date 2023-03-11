@@ -30,6 +30,13 @@ class Clock:
     def add(self, time: Time):
         return Clock(self._time.add(time), "")
 
+    def _format_days_output(self):
+        days = ""
+        if self._time.days == 1:
+            days = " (next day)"
+
+        return days
+
     def to_string(self):
         hours = self._time.hours
 
@@ -37,9 +44,7 @@ class Clock:
         hours = hours if hours <= 12 else hours - 12
 
         time = f'{hours}:{self._time.minutes:02} {clock_format}'
-        days = ""
-        if self._time.days == 1:
-            days = " (next day)"
+        days = self._format_days_output()
 
         return time + days
 
