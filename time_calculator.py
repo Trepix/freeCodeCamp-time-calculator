@@ -34,6 +34,8 @@ class Clock:
         days = ""
         if self._time.days == 1:
             days = " (next day)"
+        elif self._time.days > 1:
+            days = f" ({self._time.days} days later)"
 
         return days
 
