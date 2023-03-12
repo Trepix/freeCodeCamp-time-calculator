@@ -31,25 +31,32 @@ class Clock:
         return Clock(self._time.add(time), "")
 
     def _format_days_output(self):
-        days = ""
-        if self._time.days == 1:
-            days = " (next day)"
-        elif self._time.days > 1:
-            days = f" ({self._time.days} days later)"
+        days = self._time.days
+        match days:
+            case 0:
+                return ""
+            case 1:
+                return " (next day)"
+            case _:
+                return f" ({self._time.days} days later)"
 
-        return days
+    def _format_hours_output(self):
+        hours = self._time.hours
+        match hours:
+            case 0:
+                return 12
+            case hours if hours <= 12:
+                return hours
+            case _:
+                return hours - 12
 
     def to_string(self):
-        hours = self._time.hours
-        clock_format = "AM" if hours < 12 else "PM"
-        if hours > 12:
-            hours -= 12
-        elif hours == 0:
-            hours = 12
+        hours = self._format_hours_output()
+        clock_format = "AM" if self._time.hours < 12 else "PM"
 
         time = f'{hours}:{self._time.minutes:02} {clock_format}'
-        days = self._format_days_output()
 
+        days = self._format_days_output()
         return time + days
 
 
