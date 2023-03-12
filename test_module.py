@@ -45,11 +45,11 @@ class UnitTests(unittest.TestCase):
         expected = "5:01 AM"
         self.assertEqual(expected, actual, 'Expected adding 0:00 to return initial time.')
 
-    @unittest.skip("Ignore to avoid noise before introduce starting week day")
     def test_same_period_with_day(self):
         actual = add_time("3:30 PM", "2:12", "Monday")
         expected = "5:42 PM, Monday"
         self.assertEqual(expected, actual, 'Expected calling "add_time()" with "3:30 PM", "2:12", "Monday" to return "5:42 PM, Monday"')
+
 
     @unittest.skip("Ignore to avoid noise before introduce starting week day")
     def test_twenty_four_with_day(self):
@@ -57,17 +57,20 @@ class UnitTests(unittest.TestCase):
         expected = "2:59 AM, Sunday (next day)"
         self.assertEqual(expected, actual, 'Expected calling "add_time()" with "2:59 AM", "24:00", "saturDay" to return "2:59 AM, Sunday (next day)"')
 
+
     @unittest.skip("Ignore to avoid noise before introduce starting week day")
     def test_two_days_later_with_day(self):
         actual = add_time("11:59 PM", "24:05", "Wednesday")
         expected = "12:04 AM, Friday (2 days later)"
         self.assertEqual(expected, actual, 'Expected calling "add_time()" with "11:59 PM", "24:05", "Wednesday" to return "12:04 AM, Friday (2 days later)"')
 
+
     @unittest.skip("Ignore to avoid noise before introduce starting week day")
     def test_high_duration_with_day(self):
         actual = add_time("8:16 PM", "466:02", "tuesday")
         expected = "6:18 AM, Monday (20 days later)"
         self.assertEqual(expected, actual, 'Expected calling "add_time()" with "8:16 PM", "466:02", "tuesday" to return "6:18 AM, Monday (20 days later)"')
+
 
 if __name__ == "__main__":
     unittest.main()

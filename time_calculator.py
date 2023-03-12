@@ -60,7 +60,7 @@ class Clock:
         return f'{time} {clock_format} {days}'.rstrip()
 
 
-def parse_clock(start) -> Clock:
+def parse_clock(start, staring_date) -> Clock:
     time = start.split()[0].split(":")
     clock_format = start.split()[1]
     return Clock(Time(time[0], time[1]), clock_format)
@@ -71,7 +71,7 @@ def parse_duration(duration):
     return Time(time[0], time[1])
 
 
-def add_time(start, duration):
-    clock = parse_clock(start)
+def add_time(start, duration, starting_day=None):
+    clock = parse_clock(start, starting_day)
     duration = parse_duration(duration)
     return clock.add(duration).to_string()
