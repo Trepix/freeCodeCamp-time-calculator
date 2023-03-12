@@ -41,9 +41,11 @@ class Clock:
 
     def to_string(self):
         hours = self._time.hours
-
         clock_format = "AM" if hours < 12 else "PM"
-        hours = hours if hours <= 12 else hours - 12
+        if hours > 12:
+            hours -= 12
+        elif hours == 0:
+            hours = 12
 
         time = f'{hours}:{self._time.minutes:02} {clock_format}'
         days = self._format_days_output()
