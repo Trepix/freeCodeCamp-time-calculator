@@ -36,9 +36,9 @@ class Clock:
             case 0:
                 return ""
             case 1:
-                return " (next day)"
+                return "(next day)"
             case _:
-                return f" ({self._time.days} days later)"
+                return f"({self._time.days} days later)"
 
     def _format_hours_output(self):
         hours = self._time.hours
@@ -54,10 +54,10 @@ class Clock:
         hours = self._format_hours_output()
         clock_format = "AM" if self._time.hours < 12 else "PM"
 
-        time = f'{hours}:{self._time.minutes:02} {clock_format}'
+        time = f'{hours}:{self._time.minutes:02}'
 
         days = self._format_days_output()
-        return time + days
+        return f'{time} {clock_format} {days}'.rstrip()
 
 
 def parse_clock(start) -> Clock:
