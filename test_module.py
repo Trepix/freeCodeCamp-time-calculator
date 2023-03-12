@@ -57,8 +57,6 @@ class UnitTests(unittest.TestCase):
         expected = "2:59 AM, Sunday (next day)"
         self.assertEqual(expected, actual, 'Expected calling "add_time()" with "2:59 AM", "24:00", "saturDay" to return "2:59 AM, Sunday (next day)"')
 
-
-    @unittest.skip("Ignore to avoid noise before introduce starting week day")
     def test_two_days_later_with_day(self):
         actual = add_time("11:59 PM", "24:05", "Wednesday")
         expected = "12:04 AM, Friday (2 days later)"

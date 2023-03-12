@@ -21,6 +21,9 @@ class Time:
 
 
 class Clock:
+
+    _days_of_the_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
     def __init__(self, time: Time, clock_format: str, day=None):
         if clock_format == "PM":
             time = time.add(Time(12, 0))
@@ -29,7 +32,12 @@ class Clock:
         self._day = day
 
     def add(self, time: Time):
-        return Clock(self._time.add(time), "", self._day)
+        time_after = self._time.add(time)
+        day = self._day
+        if day:
+            current_day_index = Clock._days_of_the_week.index(day)
+            day = Clock._days_of_the_week[(current_day_index + time_after.days) % 7]
+        return Clock(time_after, "", day)
 
     def _format_days_output(self):
         days = self._time.days
@@ -53,9 +61,8 @@ class Clock:
 
     def to_string(self):
         hours = self._format_hours_output()
-        clock_format = "AM" if self._time.hours < 12 else "PM"
-
         time = f'{hours}:{self._time.minutes:02}'
+        clock_format = "AM" if self._time.hours < 12 else "PM"
 
         passed_days = self._format_days_output()
 
