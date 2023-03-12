@@ -18,7 +18,7 @@ class Time:
         hours = (hours + int(minutes / 60)) % 24
         minutes = minutes % 60
         return Time.__create__(days, hours, minutes)
-
+    
 
 class Clock:
 
@@ -29,15 +29,15 @@ class Clock:
             time = time.add(Time(12, 0))
 
         self._time = time
-        self._day = day
+        self._day = day.capitalize() if day else None
 
     def add(self, time: Time):
         time_after = self._time.add(time)
-        day = self._day
-        if day:
-            current_day_index = Clock._days_of_the_week.index(day)
-            day = Clock._days_of_the_week[(current_day_index + time_after.days) % 7]
-        return Clock(time_after, "", day)
+        day_after = self._day
+        if day_after:
+            current_day_index = Clock._days_of_the_week.index(day_after)
+            day_after = Clock._days_of_the_week[(current_day_index + time_after.days) % 7]
+        return Clock(time_after, "", day_after)
 
     def _format_days_output(self):
         days = self._time.days
