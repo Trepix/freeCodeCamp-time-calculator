@@ -1,3 +1,15 @@
+class WeekDay:
+    _days_of_the_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+    def __init__(self, day):
+        self.name = day.capitalize()
+
+    def add(self, days):
+        current_day_index = WeekDay._days_of_the_week.index(self.name)
+        day_after = WeekDay._days_of_the_week[(current_day_index + days) % 7]
+        return WeekDay(day_after)
+
+
 class Time:
     def __init__(self, hours, minutes):
         self.hours = int(hours)
@@ -18,25 +30,20 @@ class Time:
         hours = (hours + int(minutes / 60)) % 24
         minutes = minutes % 60
         return Time.__create__(days, hours, minutes)
-    
+
 
 class Clock:
 
-    _days_of_the_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-    def __init__(self, time: Time, clock_format: str, day=None):
+    def __init__(self, time: Time, clock_format: str, day: WeekDay = None):
         if clock_format == "PM":
             time = time.add(Time(12, 0))
 
         self._time = time
-        self._day = day.capitalize() if day else None
+        self._day = day
 
     def add(self, time: Time):
         time_after = self._time.add(time)
-        day_after = self._day
-        if day_after:
-            current_day_index = Clock._days_of_the_week.index(day_after)
-            day_after = Clock._days_of_the_week[(current_day_index + time_after.days) % 7]
+        day_after = self._day.add(time_after.days) if self._day else None
         return Clock(time_after, "", day_after)
 
     def _format_days_output(self):
@@ -69,13 +76,14 @@ class Clock:
         if self._day is None:
             return f'{time} {clock_format} {passed_days}'.rstrip()
         else:
-            return f'{time} {clock_format}, {self._day} {passed_days}'.rstrip()
+            return f'{time} {clock_format}, {self._day.name} {passed_days}'.rstrip()
 
 
-def parse_clock(start, staring_date) -> Clock:
+def parse_clock(start, staring_day_name) -> Clock:
     time = start.split()[0].split(":")
     clock_format = start.split()[1]
-    return Clock(Time(time[0], time[1]), clock_format, staring_date)
+    starting_day = WeekDay(staring_day_name) if staring_day_name else None
+    return Clock(Time(time[0], time[1]), clock_format, starting_day)
 
 
 def parse_duration(duration):
@@ -83,7 +91,7 @@ def parse_duration(duration):
     return Time(time[0], time[1])
 
 
-def add_time(start, duration, starting_day=None):
-    clock = parse_clock(start, starting_day)
+def add_time(start, duration, starting_day_name=None):
+    clock = parse_clock(start, starting_day_name)
     duration = parse_duration(duration)
     return clock.add(duration).to_string()
