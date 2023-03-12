@@ -21,14 +21,15 @@ class Time:
 
 
 class Clock:
-    def __init__(self, time: Time, clock_format: str):
+    def __init__(self, time: Time, clock_format: str, day=None):
         if clock_format == "PM":
             time = time.add(Time(12, 0))
 
         self._time = time
+        self._day = day
 
     def add(self, time: Time):
-        return Clock(self._time.add(time), "")
+        return Clock(self._time.add(time), "", self._day)
 
     def _format_days_output(self):
         days = self._time.days
@@ -56,14 +57,18 @@ class Clock:
 
         time = f'{hours}:{self._time.minutes:02}'
 
-        days = self._format_days_output()
-        return f'{time} {clock_format} {days}'.rstrip()
+        passed_days = self._format_days_output()
+
+        if self._day is None:
+            return f'{time} {clock_format} {passed_days}'.rstrip()
+        else:
+            return f'{time} {clock_format}, {self._day} {passed_days}'.rstrip()
 
 
 def parse_clock(start, staring_date) -> Clock:
     time = start.split()[0].split(":")
     clock_format = start.split()[1]
-    return Clock(Time(time[0], time[1]), clock_format)
+    return Clock(Time(time[0], time[1]), clock_format, staring_date)
 
 
 def parse_duration(duration):
